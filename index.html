@@ -4,6 +4,7 @@
   <title> Angular Min</title>
 
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-messages.js"></script>
   <link rel="stylesheet" type="text/css" href="local.css"/>
   <script type="text/javascript" src="app.js"/>
 </script>
@@ -12,7 +13,38 @@
 </head>
 <body ng-controller="TestController">
   <div>
-    {{testValue}}
+    Current phone in controller: {{formScope.phone}}
 </div>
+
+<form name="myForm" class="row form-horizontal" novalidate="" ng-init="setFormScope(this)">
+<div class="control-group">
+<label class="control-label" for="inputPhone">Phone</label>
+<div class="controls">
+  <div ng-model="phone" phone-validate required="required" type="text" name="phone" id="phone" placeholder="Phone"></div> {{phone}}
+  <div ng-messages="myForm.phone.$error" role="alert">
+    <div ng-message="required">You did not enter a field</div>
+    <div ng-message="phone, phoneMinLength, phoneMaxLength">
+      Your phone must contain 10 digits
+    </div>
+    <div ng-message="shouldBeNeverShown">You should never see this message</div>
+  </div>
+</div>
+</div>
+<div class="control-group">
+<div class="controls">
+  <button type="submit" class="btn" ng-disabled="myForm.$invalid">test Submit button</button>
+</div>
+</form>
+
+  <pre class="container">
+Phone:{{form.phone.$error|json}} with value {{form.phone}}
+Form: {{form.$error|json}}
+      </pre>
+</div>
+
+
+
+
+
 
 </body></html>
